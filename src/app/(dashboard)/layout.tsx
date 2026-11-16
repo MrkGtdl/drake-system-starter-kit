@@ -63,7 +63,6 @@ function Brand() {
       <div className="min-w-0">
         <p className="truncate text-sm font-bold tracking-tight">
           DRAKE Technologies
-          {/* Development, Research, Automation, Knowledge & Engineering */}
         </p>
 
         <p className="hidden text-[10px] font-medium uppercase tracking-[0.16em] text-muted-foreground sm:block">
@@ -110,10 +109,6 @@ function OrganizationSelection({
         <Brand />
 
         <div className="flex items-center gap-2 sm:gap-3">
-          {isSuperadmin && (
-            <CreateOrganizationForm compact platformRole={platformRole} />
-          )}
-
           <UserProfile name={name} role={platformRole} />
 
           <div className="mx-1 h-7 w-px bg-border" />
@@ -155,7 +150,8 @@ function OrganizationSelection({
           {/* Organizations */}
           {organizations.length > 0 ? (
             <section className="mt-10 space-y-4">
-              <div className="flex items-center justify-between">
+              {/* Section Header */}
+              <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <h2 className="text-sm font-semibold">
                     Available organizations
@@ -166,11 +162,18 @@ function OrganizationSelection({
                   </p>
                 </div>
 
-                <span className="rounded-full border bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
-                  {organizations.length} available
-                </span>
+                <div className="flex items-center gap-3">
+                  <span className="rounded-full border bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
+                    {organizations.length} available
+                  </span>
+
+                  {isSuperadmin && (
+                    <CreateOrganizationForm platformRole={platformRole} />
+                  )}
+                </div>
               </div>
 
+              {/* Organization Cards */}
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {organizations.map((organization) => (
                   <div
@@ -204,6 +207,7 @@ function OrganizationSelection({
               </div>
             </section>
           ) : (
+            /* Empty State */
             <div className="mt-10 rounded-2xl border bg-background p-8 text-center shadow-sm sm:p-12">
               <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-muted">
                 <Building2 className="h-7 w-7 text-muted-foreground" />
@@ -353,7 +357,7 @@ async function DashboardContent({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Header */}
+      {/* Dashboard Header */}
       <header className="fixed inset-x-0 top-0 z-50 flex h-16 items-center justify-between gap-3 border-b bg-background/90 px-4 backdrop-blur-xl sm:px-6 lg:px-8">
         <Brand />
 
@@ -364,26 +368,14 @@ async function DashboardContent({ children }: { children: React.ReactNode }) {
               canDelete={notificationDeletes.success}
             />
           )}
-
-          <div className="hidden items-center gap-2 sm:flex">
-            <OrganizationSwitcher
-              organizations={context.organizations}
-              activeOrganizationId={context.activeOrganization.id}
-            />
-
-            <CreateOrganizationForm compact platformRole={platformRole} />
-          </div>
-
-          <UserProfile
-            name={context.user.name}
-            role={isSuperadmin ? "Superadmin" : "Member"}
-          />
         </div>
       </header>
 
       {/* Dashboard Content */}
       <DashboardShell
         isSuperadmin={isSuperadmin}
+        userName={context.user.name}
+        userRole={isSuperadmin ? "Superadmin" : "Member"}
         permissions={{
           canReadDashboard: isSuperadmin || dashboard.success,
           canReadMembers: isSuperadmin || members.success,

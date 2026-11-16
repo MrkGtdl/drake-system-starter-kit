@@ -9,12 +9,16 @@ type DashboardShellProps = {
   children: React.ReactNode;
   isSuperadmin: boolean;
   permissions: SidebarPermissions;
+  userName: string;
+  userRole: string;
 };
 
 export default function DashboardShell({
   children,
   isSuperadmin,
   permissions,
+  userName,
+  userRole,
 }: DashboardShellProps) {
   const [collapsed, setCollapsed] = useState(false);
 
@@ -32,6 +36,8 @@ export default function DashboardShell({
         permissions={permissions}
         collapsed={collapsed}
         onToggle={() => setCollapsed((prev) => !prev)}
+        userName={userName}
+        userRole={userRole}
       />
 
       <main className="min-w-0 p-6">{children}</main>
