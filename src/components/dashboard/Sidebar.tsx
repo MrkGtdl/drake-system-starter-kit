@@ -8,7 +8,7 @@ import {
   Building2,
 } from "lucide-react";
 
-import LogoutButton from "@/components/dashboard/LogoutButton";
+import SignOutButton from "@/components/dashboard/SignOutButton";
 
 type SidebarProps = {
   isSuperadmin: boolean;
@@ -91,7 +91,7 @@ export default function Sidebar({ permissions, isSuperadmin }: SidebarProps) {
 
       {/* Fixed bottom logout area */}
       <div className="mt-4 shrink-0 border-t pt-4">
-        <LogoutButton />
+        <SignOutButton />
       </div>
     </aside>
   );

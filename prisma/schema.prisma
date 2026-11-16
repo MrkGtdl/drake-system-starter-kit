@@ -13,14 +13,16 @@ datasource db {
 }
 
 model User {
-  id            String       @id
-  name          String
-  email         String
-  emailVerified Boolean      @default(false)
-  image         String?
-  platformRole  String       @default("user")
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  id                       String       @id
+  name                     String
+  email                    String
+  emailVerified            Boolean      @default(false)
+  image                    String?
+  platformRole             String       @default("user")
+  lastActiveOrganizationId String?
+  createdAt                DateTime     @default(now())
+  updatedAt                DateTime     @updatedAt
+
   auditLogs     AuditLog[]     @relation("AuditLogActor")
   notifications Notification[] @relation("NotificationRecipient")
   sessions      Session[]
@@ -31,7 +33,6 @@ model User {
   @@unique([email])
   @@map("user")
 }
-
 model Session {
   id                   String   @id
   expiresAt            DateTime

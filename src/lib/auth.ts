@@ -10,6 +10,51 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
 
+  // Restore the user's last selected organization
+  // whenever a new session is created.
+  databaseHooks: {
+    session: {
+      create: {
+        before: async (session) => {
+          const user = await prisma.user.findUnique({
+            where: {
+              id: session.userId,
+            },
+            select: {
+              lastActiveOrganizationId: true,
+            },
+          });
+
+          const organizationId = user?.lastActiveOrganizationId;
+
+          if (!organizationId) {
+            return {
+              data: session,
+            };
+          }
+
+          // Verify that the user is still a member.
+          const membership = await prisma.member.findFirst({
+            where: {
+              userId: session.userId,
+              organizationId,
+            },
+            select: {
+              organizationId: true,
+            },
+          });
+
+          return {
+            data: {
+              ...session,
+              activeOrganizationId: membership?.organizationId ?? null,
+            },
+          };
+        },
+      },
+    },
+  },
+
   user: {
     additionalFields: {
       platformRole: {

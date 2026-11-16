@@ -7,6 +7,7 @@ import { z } from "zod";
 
 import { auth } from "@/lib/auth";
 import { AuthorizationError, requireSuperadmin } from "@/lib/authorization";
+import { prisma } from "@/lib/prisma";
 
 const organizationSchema = z.object({
   name: z
@@ -33,6 +34,7 @@ export async function switchOrganization(formData: FormData) {
     redirect("/sign-in");
   }
 
+  // Verify organization membership.
   const organizations = await auth.api.listOrganizations({
     headers: requestHeaders,
   });
@@ -45,10 +47,21 @@ export async function switchOrganization(formData: FormData) {
     redirect("/dashboard");
   }
 
+  // Update the active organization in the current session.
   await auth.api.setActiveOrganization({
     headers: requestHeaders,
     body: {
       organizationId,
+    },
+  });
+
+  // Save the last selected organization for future logins.
+  await prisma.user.update({
+    where: {
+      id: session.user.id,
+    },
+    data: {
+      lastActiveOrganizationId: organizationId,
     },
   });
 
