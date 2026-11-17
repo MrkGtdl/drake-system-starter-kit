@@ -69,7 +69,7 @@ export default function SignInPage() {
             </div>
 
             <span className="text-lg font-semibold tracking-tight">
-              System Starter Kit
+              DRAKE Technologies
             </span>
           </div>
 
@@ -113,7 +113,7 @@ export default function SignInPage() {
           </div>
 
           <div className="relative z-10 flex items-center justify-between border-t border-white/10 pt-6 text-xs text-white/45">
-            <span>© {new Date().getFullYear()} System Starter Kit</span>
+            <span>© {new Date().getFullYear()} DRAKE Technologies</span>
             <span>Secure access</span>
           </div>
         </section>
@@ -128,7 +128,7 @@ export default function SignInPage() {
               </div>
 
               <span className="font-semibold tracking-tight">
-                System Starter Kit
+                DRAKE Technologies
               </span>
             </div>
 

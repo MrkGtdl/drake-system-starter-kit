@@ -61,12 +61,12 @@ function Brand() {
       </div>
 
       <div className="min-w-0">
-        <p className="truncate text-sm font-bold tracking-tight">
+        <p className="truncate text-md font-bold tracking-tight">
           DRAKE Technologies
         </p>
 
-        <p className="hidden text-[10px] font-medium uppercase tracking-[0.16em] text-muted-foreground sm:block">
-          Workspace platform
+        <p className="hidden text-[7.5px] font-medium uppercase tracking-[0.30em] text-muted-foreground sm:block">
+          Innovate · Develop · Dominate
         </p>
       </div>
     </div>
